@@ -1,92 +1,0 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ثبت سفارش - Supernatural</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../style/order.css">
-</head>
-
-<body>
-  <div class="container">
-    <h2>فرم ثبت سفارش</h2>
-    <form id="orderForm">
-      <div class="input-group">
-        <i class="fa fa-user"></i>
-        <input type="text" id="name" name="name" placeholder="نام شما" required>
-      </div>
-
-      <div class="input-group">
-        <i class="fa fa-phone"></i>
-        <input type="text" id="contact" name="contact" placeholder="راه ارتباطی (ایمیل / تلگرام / دیسکورد)" required>
-      </div>
-
-      <div class="input-group">
-        <i class="fa fa-file-alt"></i>
-        <textarea id="details" name="details" rows="5" placeholder="توضیحات سفارش" required></textarea>
-      </div>
-
-      <button type="submit">📩 ارسال سفارش</button>
-    </form>
-
-    <div class="success" id="successMsg">
-      ✅ سفارش شما با موفقیت ارسال شد و در دیسکورد ثبت گردید!
-    </div>
-  </div>
-
-  <script>
-    // 🚨 چک لاگین بودن
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-      alert("⚠️ برای ثبت سفارش باید ابتدا وارد حساب شوید یا ثبت‌نام کنید.");
-      window.location.href = "login.html"; 
-    }
-
-    const form = document.getElementById("orderForm");
-    const successMsg = document.getElementById("successMsg");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const contact = document.getElementById("contact").value;
-      const details = document.getElementById("details").value;
-
-      const webhookURL = "https://discord.com/api/webhooks/1412388207143686214/nL7ZUkfYZ6YrDnjv42cvoTVpG1qddSAwsDQZBZcWPIzYqbkwialBozd5M1ZAmPmVrdA6";
-
-      const payload = {
-        embeds: [
-          {
-            title: "📩 سفارش جدید",
-            color: 8965321,
-            fields: [
-              { name: "👤 نام", value: name, inline: false },
-              { name: "📞 راه ارتباطی", value: contact, inline: false },
-              { name: "📝 توضیحات سفارش", value: details, inline: false }
-            ],
-            footer: { text: "Supernatural Orders System" },
-            timestamp: new Date()
-          }
-        ]
-      };
-
-      fetch(webhookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
-      .then(res => {
-        if (res.ok) {
-          successMsg.style.display = "block";
-          form.reset();
-        } else {
-          alert("⚠️ خطا در ارسال سفارش، دوباره امتحان کنید.");
-        }
-      })
-      .catch(err => {
-        alert("❌ مشکلی پیش اومد: " + err);
-      });
-    });
-  </script>
-</body>
-</html>
