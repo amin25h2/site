@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supernatural Community</title>
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/index.css">
+</head>
+
+<body>
+  <header>
+    <div style="display: flex; align-items: center;">
+      <img src="assets/icon.png" style="height:55px; width:54px; margin-left:10px;">
+      <div class="right-texts-head-link">
+        <a href="index.html" class="sitename">Supernatural</a>
+        <div class="sitedescreption">سوپرنچرال کامیونیتی</div>
+      </div>
+    </div>
+    <nav class="header-right">
+      <a href="#about" class="nav-link">درباره ما</a>
+      <a href="page/series.html" class="nav-link">سریال</a>
+      <a href="#contact" class="nav-link">تماس</a>
+      <div class="dropdown">
+        <a class="nav-link">محصولات</a>
+        <div class="dropdown-content">
+          <a href="page/bots.html?cat=security">ربات‌های امنیتی</a>
+          <a href="page/bots.html?cat=music">ربات‌های موزیک</a>
+          <a href="page/bots.html?cat=fun">ربات‌های سرگرمی</a>
+        </div>
+      </div>
+      <a href="page/order.html" class="nav-link">سفارش‌های ویژه</a>
+
+      <a href="page/login.html" class="btn-login">ورود</a>
+      <div class="cart-icon" onclick="window.location.href='page/cart.html'">
+        🛒 <span id="cartCount" class="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== Hero Section ===== -->
+  <section class="hero">
+    <h2>ساخت ربات‌های دیسکورد حرفه‌ای</h2>
+    <p>کامیونیتی Supernatural بهترین مکان برای توسعه و ساخت ربات‌های اختصاصی دیسکورد است.</p>
+    <a href="https://discord.gg/afeE6AxVRz" target="_blank" class="btn">ورود به دیسکورد</a>
+  </section>
+
+  <!-- ===== About Section ===== -->
+  <section id="about">
+    <h3>درباره ما</h3>
+    <p>ما یک کامیونیتی پرشور از توسعه‌دهندگان دیسکورد هستیم که هدفمان ساخت ربات‌های خلاقانه و کاربردی برای مدیریت و
+      سرگرمی سرورهاست.</p>
+    <img src="assets/icon.png" alt="لوگو" class="about-img">
+  </section>
+
+  <!-- ===== Bots Section ===== -->
+  <section id="bots">
+    <h3>ربات‌های ما</h3>
+    <div class="bots">
+      <div class="bot-card">
+        <img src="assets/pg1.png" alt="Security Bot" class="bot-img">
+        <h4>Security Bot</h4>
+        <p>ربات مدیریت کامل سرور با قابلیت اتوماسیون، فیلتر کلمات و رول‌دهی خودکار.</p>
+        <p class="price">400,000 تومان</p>
+        <button class="btn-nav">➕ افزودن به سبد</button>
+      </div>
+      <div class="bot-card">
+        <img src="assets/pg2.jpg" alt="Music Player" class="bot-img">
+        <h4>Music Player</h4>
+        <p>ربات مخصوص برای پخش آهنگ با کیفیت بالا.</p>
+        <p class="price">400,000 تومان</p>
+        <button class="btn-nav">➕ افزودن به سبد</button>
+      </div>
+      <div class="bot-card">
+        <img src="assets/pg3.png" alt="Game Plus" class="bot-img">
+        <h4>Game Plus</h4>
+        <p>مینی‌گیم‌ها و سرگرمی‌های متنوع برای افزایش تعامل اعضا.</p>
+        <p class="price">400,000 تومان</p>
+        <button class="btn-nav">➕ افزودن به سبد</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Other Services ===== -->
+  <div style="text-align:center; margin:3rem 0;">
+    <a href="page/bots.html"
+      style="font-size:1.4rem;text-decoration:none;background:linear-gradient(135deg,#8a2be2,#00d4ff);color:#fff;padding:0.8rem 2rem;border-radius:12px;font-weight:bold;display:inline-block;transition:transform 0.3s,box-shadow 0.3s;box-shadow:0 0 15px rgba(0,212,255,0.6);">
+      🤖 ربات‌ها و خدمات دیگر
+    </a>
+  </div>
+
+  <!-- ===== Contact Section ===== -->
+  <section id="contact">
+    <h3>تماس با ما</h3>
+    <p>برای تماس مستقیم روی دکمه زیر بزنید 👇</p>
+    <img src="contact.jpg" alt="Contact" class="contact-img">
+    <div style="margin-top:1rem;">
+      <a href="tel:+989945922254" class="btn-primary">📞 تماس با ما</a>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>© 2025 Supernatural Community - All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // ✅ Scroll Animation
+    const sections = document.querySelectorAll("section");
+
+    function revealSections() {
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          sec.classList.add("visible");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", revealSections);
+    window.addEventListener("load", revealSections);
+
+    // ✅ مدیریت لاگین/لاگ‌اوت
+    function checkLogin() {
+      const authDiv = document.getElementById("auth-buttons");
+      if (localStorage.getItem("isLoggedIn")) {
+        const username = localStorage.getItem("username") || "کاربر";
+        authDiv.innerHTML = `
+          <span style="margin-left:10px;">👤 ${username}</span>
+          <a href="dashboard.html" class="btn-nav">پنل کاربری</a>
+          <button class="btn-nav" onclick="logout()">خروج</button>
+        `;
+      } else {
+        authDiv.innerHTML = `<a href="page/login.html" class="btn-nav">Login</a>`;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      checkLogin();
+      alert("✅ با موفقیت خارج شدید.");
+    }
+
+    checkLogin();
+
+    // ✅ سیستم سبد خرید با چک لاگین
+    const cartButtons = document.querySelectorAll(".bot-card .btn-nav");
+    cartButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (!localStorage.getItem("isLoggedIn")) {
+          alert("⚠️ لطفاً اول وارد حساب کاربری شوید!");
+          window.location.href = "page/login.html";
+          return;
+        }
+
+        const card = btn.closest(".bot-card");
+        const item = {
+          name: card.querySelector("h4").innerText,
+          price: card.querySelector(".price").innerText,
+          image: card.querySelector("img").src,
+        };
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        document.getElementById("cartCount").innerText = cart.length;
+        alert("✅ " + item.name + " به سبد خرید اضافه شد.");
+      });
+    });
+
+    // 🔄 وقتی صفحه لود شد تعداد سبد رو نشون بده
+    document.addEventListener("DOMContentLoaded", () => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cartCount").innerText = cart.length;
+    });
+  </script>
+</body>
+
+</html>
