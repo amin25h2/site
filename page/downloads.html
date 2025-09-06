@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لینک‌های دانلود</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../style/downloads.css" />
+</head>
+
+<body>
+    <div class="download-container">
+        <h2 id="seriesTitle">📥 لینک‌های دانلود</h2>
+        <div id="downloads"></div>
+    </div>
+
+    <script src="../script/series.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const seriesId = urlParams.get("id");
+
+        const serie = seriesList.find(s => s.id === seriesId);
+
+        if (serie) {
+            document.getElementById("seriesTitle").innerText = `📥 لینک‌های دانلود ${serie.seriesData.title}`;
+
+            const container = document.getElementById("downloads");
+
+            serie.downloadLink.seasons.forEach(season => {
+                const card = document.createElement("div");
+                card.className = "download-card";
+
+                card.innerHTML = `
+  <div class="download-meta">
+    <div class="season-button">فصل ${season.seasonNumber}</div>
+    <span class="episodes-count">${season.episodes.length} قسمت</span>
+    <span style="color:#ff9900;">⬇️</span>
+  </div>
+  <div class="episode-list">
+    ${season.episodes.map(ep => `
+      <div class="episode-item">
+        <div class="episode-row">
+          <span class="episode-label">قسمت ${ep.episodeNumber}</span>
+          <div class="quality-links">
+            ${Object.entries(ep.links).map(([quality, link]) => `
+              <a href="${link}" target="_blank">${quality}</a>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    `).join("")}
+  </div>
+`;
+
+
+                const meta = card.querySelector(".download-meta");
+                const episodeList = card.querySelector(".episode-list");
+
+                meta.addEventListener("click", () => {
+                    episodeList.classList.toggle("open");
+                });
+
+                container.appendChild(card);
+            });
+        } else {
+            document.getElementById("seriesTitle").innerText = "سریال پیدا نشد ❌";
+        }
+    </script>
+</body>
+
+</html>

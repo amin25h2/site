@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سبد خرید | Supernatural</title>
+  <link rel="icon" type="image/png" href="../assets/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/cart.css">
+</head>
+
+<body>
+  <header>
+    <a href="../index.html" class="sitename-link">Supernatural</a>
+    <nav class="header-right">
+      <a href="../page/bots.html" class="nav-link">فروشگاه</a>
+      <div class="cart-icon" onclick="window.location.reload();">🛒 <span id="cartCount">0</span></div>
+    </nav>
+  </header>
+
+  <main class="shop-container">
+    <h2 class="shop-title">🛒 سبد خرید شما</h2>
+    <div id="cartContainer"></div>
+    <p id="emptyMsg">سبد خرید شما خالی است.</p>
+    <p id="totalPrice"></p>
+  </main>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cartContainer");
+    const cartCountEl = document.getElementById("cartCount");
+    const emptyMsg = document.getElementById("emptyMsg");
+    const totalPriceEl = document.getElementById("totalPrice");
+
+    function updateCartCount() {
+      cartCountEl.innerText = cart.length;
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      container.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        emptyMsg.style.display = "block";
+        totalPriceEl.style.display = "none";
+        return;
+      } else {
+        emptyMsg.style.display = "none";
+        totalPriceEl.style.display = "block";
+      }
+
+      cart.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${product.img}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.desc}</p>
+          <p class="price">${product.price}</p>
+          <button class="btn-remove">❌ حذف از سبد</button>
+        `;
+        const btn = card.querySelector(".btn-remove");
+        btn.addEventListener("click", () => {
+          cart = cart.filter(p => p.id !== product.id);
+          saveCart();
+        });
+        container.appendChild(card);
+
+        total += parseInt(product.price.replace(/\D/g, ""));
+      });
+
+      totalPriceEl.innerText = "💰 جمع کل: " + total + " تومان";
+      updateCartCount();
+    }
+
+    renderCart();
+  </script>
+</body>
+
+</html>

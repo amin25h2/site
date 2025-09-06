@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لیست سریال‌ها</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/series.css">
+</head>
+
+<body>
+  <div id="seriesContainer"></div>
+
+  <script src="../script/series.js"></script>
+  <script>
+    const container = document.getElementById("seriesContainer");
+
+    seriesList.forEach(serie => {
+      const card = document.createElement("div");
+      card.className = "series-card";
+
+      card.innerHTML = `
+                <div class="rating-box">
+                    <div class="rating-score">${serie.seriesData.imdb}<span>/10</span></div>
+                    <div class="imdb-badge">IMDb</div>
+                </div>
+
+                <div class="series-poster">
+                    <img src="${serie.seriesData.poster}">
+                </div>
+
+                <div class="series-info">
+                    <h1>دانلود سریال ${serie.seriesData.title}</h1>
+                    <p><strong>کیفیت :</strong> ${serie.seriesData.quality}</p>
+                    <p><strong>زمان :</strong> ${serie.seriesData.duration}</p>
+                    <p><strong>ژانر :</strong> ${serie.seriesData.genre}</p>
+                    <p><strong>ستارگان :</strong> ${serie.seriesData.cast.join(" , ")}</p>
+                    <p><strong>محصول کشور :</strong> ${serie.seriesData.country}</p>
+                    <p class="desc">${serie.seriesData.description}</p>
+                </div>
+
+                <div class="poster-buttons">
+                    <a href="${serie.seriesData.trailerLink}" class="trailer-btn">مشاهده تریلر 🎬</a>
+                    <div class="status-box">وضعیت : ${serie.seriesData.status}</div>
+                    <a href="downloads.html?id=${serie.id}" class="download-btn">⬇ دانلود</a>
+                </div>
+            `;
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+
+</html>
