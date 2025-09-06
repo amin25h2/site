@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فروشگاه ربات‌ها | Supernatural</title>
+  <link rel="icon" type="image/png" href="../assets/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: #222;
+      color: #fff;
+    }
+
+    .sitename-link {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.5em;
+      text-decoration: none;
+    }
+
+    .header-right a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    .btn-login {
+      background: #ff5722;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .cart-icon {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cart-count {
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8em;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    .shop-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .shop-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .sort-options span {
+      margin-right: 10px;
+    }
+
+    .sort-btn {
+      margin-left: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .sort-btn.active {
+      background: #222;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-card .price {
+      font-weight: 700;
+      margin: 10px 0;
+    }
+
+    .btn-buy {
+      background: #ff5722;
+      border: none;
+      padding: 8px 12px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="#" class="sitename-link">Supernatural</a>
+    <nav class="header-right">
+      <a href="#about" class="nav-link">درباره ما</a>
+      <a href="#bots" class="nav-link">ربات‌ها</a>
+      <a href="#contact" class="nav-link">تماس</a>
+      <a href="order.html" class="nav-link">سفارش‌های ویژه</a>
+      <a href="login.html" class="btn-login">Login</a>
+      <div class="cart-icon" onclick="window.location.href='cart.html'">
+        🛒 <span id="cartCount" class="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="shop-container">
+    <h2 class="shop-title" id="categoryTitle">🛍️ فروشگاه</h2>
+
+    <div class="products-header">
+      <div class="sort-options">
+        <span>مرتب‌سازی:</span>
+        <button class="sort-btn active" data-sort="cheap">ارزان‌ترین</button>
+        <button class="sort-btn" data-sort="expensive">گران‌ترین</button>
+      </div>
+      <div class="product-count" id="productCount">0 کالا</div>
+    </div>
+
+    <div class="products" id="productsContainer"></div>
+  </main>
+
+  <script>
+    // ===== تعریف دسته‌ها و محصولات نمونه =====
+    const categories = [
+      {
+        id: "security",
+        title: "ربات‌های امنیتی",
+        products: [
+          { id: "bot1", name: "ربات امنیتی A", desc: "حفاظت از سرور شما", price: "100,000 تومان", img: "https://via.placeholder.com/200" },
+          { id: "bot2", name: "ربات امنیتی B", desc: "مدیریت دسترسی کاربران", price: "200,000 تومان", img: "https://via.placeholder.com/200" },
+          { id: "bot3", name: "ربات امنیتی C", desc: "بررسی لاگ‌ها و هشدار", price: "150,000 تومان", img: "https://via.placeholder.com/200" }
+        ]
+      },
+      {
+        id: "fun",
+        title: "ربات‌های سرگرمی",
+        products: [
+          { id: "bot4", name: "ربات سرگرمی A", desc: "بازی و سرگرمی", price: "50,000 تومان", img: "https://via.placeholder.com/200" },
+          { id: "bot5", name: "ربات سرگرمی B", desc: "تست و شوخی", price: "70,000 تومان", img: "https://via.placeholder.com/200" }
+        ]
+      }
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get("cat") || "security";
+
+    const container = document.getElementById("productsContainer");
+    const title = document.getElementById("categoryTitle");
+    const productCountEl = document.getElementById("productCount");
+    const sortBtns = document.querySelectorAll(".sort-btn");
+
+    const category = categories.find(c => c.id === categoryId);
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCartCount() {
+      document.getElementById("cartCount").innerText = cart.length;
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function renderProducts(list) {
+      container.innerHTML = "";
+      list.forEach(product => {
+        const inCart = cart.find(p => p.id === product.id);
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${product.img}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.desc}</p>
+          <p class="price">${product.price}</p>
+          <button class="btn-buy">${inCart ? '❌ حذف از سبد' : '➕ افزودن به سبد'}</button>
+        `;
+        const btn = card.querySelector(".btn-buy");
+        btn.addEventListener("click", () => {
+          if (cart.find(p => p.id === product.id)) {
+            cart = cart.filter(p => p.id !== product.id);
+            btn.innerText = "➕ افزودن به سبد";
+          } else {
+            cart.push(product);
+            btn.innerText = "❌ حذف از سبد";
+          }
+          saveCart();
+        });
+        container.appendChild(card);
+      });
+      productCountEl.innerText = list.length + " کالا";
+      updateCartCount();
+    }
+
+    function sortProducts(type) {
+      let sorted = [...category.products];
+      if (type === "cheap") {
+        sorted.sort((a, b) =>
+          parseInt(a.price.replace(/\D/g, "")) -
+          parseInt(b.price.replace(/\D/g, ""))
+        );
+      } else if (type === "expensive") {
+        sorted.sort((a, b) =>
+          parseInt(b.price.replace(/\D/g, "")) -
+          parseInt(a.price.replace(/\D/g, ""))
+        );
+      }
+      renderProducts(sorted);
+    }
+
+    if (!category) {
+      title.innerText = "❌ دسته مورد نظر پیدا نشد";
+    } else {
+      title.innerText = "🛍️ " + category.title;
+      sortProducts("cheap");
+
+      sortBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          sortBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          sortProducts(btn.dataset.sort);
+        });
+      });
+    }
+  </script>
+
+</body>
+
+</html>
