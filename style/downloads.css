@@ -1,0 +1,143 @@
+body {
+    background: #111;
+    font-family: 'Vazirmatn', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    direction: rtl;
+    color: #fff;
+}
+
+.download-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 900px;
+}
+
+#seriesTitle {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff9900;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInTitle 0.8s forwards;
+}
+
+@keyframes fadeInTitle {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.download-card {
+    background: #000;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+    border: 1px solid #ff9900;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.download-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 0 25px rgba(255, 153, 0, 0.4);
+}
+
+.download-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.download-meta .season-button {
+    background: #1b1b1b;
+    padding: 6px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #ff9900;
+    border: 1px solid #ff9900;
+    transition: background 0.3s ease;
+}
+
+.download-meta .season-button:hover {
+    background: #333;
+}
+
+.download-meta .episodes-count {
+    font-weight: bold;
+    color: #ff9900;
+}
+
+.episode-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease, padding-top 0.5s ease, margin-top 0.5s ease;
+    opacity: 0;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 1px solid #333;
+    background: #111;
+    border-radius: 0 0 12px 12px;
+}
+
+.episode-list.open {
+    max-height: 1000px;
+    opacity: 1;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.episode-item {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+
+.episode-item:hover {
+    background: #222;
+}
+
+.episode-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+}
+
+.episode-label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ff9900;
+}
+
+.quality-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.quality-links a {
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #555;
+    transition: 0.3s ease, transform 0.2s ease;
+}
+
+.quality-links a:hover {
+    background: #ff9900;
+    color: #000;
+    border-color: #ff9900;
+    transform: scale(1.1);
+}
